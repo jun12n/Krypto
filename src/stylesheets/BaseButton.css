@@ -1,0 +1,15 @@
+.BaseButton{
+    display: block;
+    width: 120px;
+    margin: 10px auto;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2296f3;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+}
