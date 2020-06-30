@@ -4,6 +4,7 @@ import Result from "./Result";
 import Reset from "./Reset";
 import Operator from "./Operator";
 import Item from "./Item";
+import Submit from "./Submit";
 import '../stylesheets/Krypto.css';
 import '../stylesheets/Table.css';
 
@@ -16,6 +17,8 @@ export default class Krypto extends React.Component{
       isSelected: Array(5).fill(false),
       numResults: Array(5).fill(null),
       operatorResults: Array(4).fill(null),
+      answer: 0,
+      isCorrect: false,
     };
   }
   getRandomInt(min, max) {
@@ -40,6 +43,7 @@ export default class Krypto extends React.Component{
       isSelected: Array(5).fill(false),
       numResults: Array(5).fill(null),
       operatorResults: Array(4).fill(null),
+      isCorrect: false,
     });
   }
   handleResetClick() {
@@ -47,6 +51,7 @@ export default class Krypto extends React.Component{
       isSelected: Array(5).fill(false),
       numResults: Array(5).fill(null),
       operatorResults: Array(4).fill(null),
+      isCorrect: false,
     });
   }
   setOperatorResult(i){
@@ -73,6 +78,31 @@ export default class Krypto extends React.Component{
       }
     }
   }
+  calculateResult() {
+    const num_vals = this.state.numResults.slice();
+    const ope_vals = this.state.operatorResults.slice();
+    if(!num_vals.includes(null) && !ope_vals.includes(null)){
+      for (let i=0;i<ope_vals.length;i++) {
+        if (ope_vals[i] === '-') {
+          num_vals[i+1] = num_vals[i] - num_vals[i+1];
+        } else if (ope_vals[i] === '+') {
+          num_vals[i+1] = num_vals[i] + num_vals[i+1];
+        } else if (ope_vals[i] === '×') {
+          num_vals[i+1] = num_vals[i] * num_vals[i+1];
+        } else if (ope_vals[i] === '÷') {
+          num_vals[i+1] = num_vals[i] / num_vals[i+1];
+        }
+      }
+      this.setState({answer: num_vals[4]});
+      if(num_vals[4]===this.state.items[5]){
+        this.setState({isCorrect: true});
+      } else {
+        this.setState({isCorrect: false});
+      }
+    } else {
+      this.setState({answer: 1000, isCorrect: false});
+    }
+  }
   renderOperatorItem(i){
     return (
       <Operator
@@ -86,6 +116,7 @@ export default class Krypto extends React.Component{
       <Item
         item={this.state.items[i]}
         onClick={() => this.setNumResult(i)}
+        isSelected={this.state.isSelected[i]}
       />
     )
   }
@@ -113,7 +144,13 @@ export default class Krypto extends React.Component{
         <Result
           operatorResults={this.state.operatorResults}
           numResults={this.state.numResults}
-          answer={this.state.items[5]}/>
+          correctAnswer={this.state.items[5]}
+          answer={this.state.answer}
+          isCorrect={this.state.isCorrect}
+        />
+        <Submit
+          onClick={() => this.calculateResult()}
+        />
       </div>
     )
   }
