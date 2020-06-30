@@ -10,45 +10,6 @@ export default class Result extends React.Component{
   removeOperatorResult(){
     alert('Not yet...')
   }
-  calculateResult(numbers, operators){
-    const num_vals = numbers.slice();
-    const ope_vals = operators.slice();
-    if(!num_vals.includes(null) && !ope_vals.includes(null)){
-      while (ope_vals.includes('÷')||ope_vals.includes('×')) {
-        for (let i = 0; i < ope_vals.length; i++) {
-          if (ope_vals[i] === '÷' || ope_vals[i] === '×') {
-            if (ope_vals[i] === '×') {
-              num_vals[i] = num_vals[i] * num_vals[i + 1]
-              num_vals.splice(i + 1, 1);
-              ope_vals.splice(i, 1);
-            } else if (ope_vals[i] === '÷') {
-              num_vals[i] = num_vals[i] / num_vals[i + 1]
-              num_vals.splice(i + 1, 1);
-              ope_vals.splice(i, 1);
-            }
-          }
-          console.log(num_vals);
-        }
-      }
-      while (ope_vals.includes('+')||ope_vals.includes('-')) {
-        for (let i = 0; i < ope_vals.length; i++) {
-          if (ope_vals[i] === '+') {
-            num_vals[i] = num_vals[i] + num_vals[i + 1]
-            num_vals.splice(i + 1, 1);
-            ope_vals.splice(i, 1);
-          } else if (ope_vals[i] === '-') {
-            num_vals[i] = num_vals[i] - num_vals[i + 1]
-            num_vals.splice(i + 1, 1);
-            ope_vals.splice(i, 1);
-          }
-          console.log(num_vals);
-        }
-      }
-      return num_vals[0]
-    }
-
-
-  }
   renderNumItem(i){
     return (
       <Item
@@ -66,6 +27,7 @@ export default class Result extends React.Component{
     )
   }
   render() {
+    const resultClass = this.props.isCorrect? 'Correct': 'Incorrect';
     return(
       <div className="result">
         <div className="input_result">
@@ -80,10 +42,10 @@ export default class Result extends React.Component{
           {this.renderNumItem(4)}
         </div>
         <div className="answer">
-          <p>= {this.props.answer}</p>
+          <p>= {this.props.correctAnswer}</p>
         </div>
-        <div>
-          {this.calculateResult(this.props.numResults, this.props.operatorResults)}
+        <div className={resultClass}>
+          <p className='correctMsg'>Correct</p>
         </div>
       </div>
     )
