@@ -1,0 +1,13 @@
+.Table {
+    padding: 20px 0;
+}
+.operator_items, .num_items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.answer{
+    font-size: 20px;
+    font-weight: bold;
+}

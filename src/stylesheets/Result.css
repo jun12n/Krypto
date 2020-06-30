@@ -1,0 +1,10 @@
+.result{
+    padding: 20px 0;
+    border-top: 1px solid #2296f3;
+}
+.input_result{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
